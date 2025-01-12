@@ -27,12 +27,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponseDTO> register(@RequestBody @Valid AuthDTO data) {
+    public ResponseEntity<LoginResponseDTO> registerDefault(@RequestBody @Valid AuthDTO data) {
         return ResponseEntity.ok(userService.registerDefault(data));
     }
 
     @PostMapping("/registerAdmin")
-    public ResponseEntity<LoginResponseDTO> register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<LoginResponseDTO> registerAdmin(@RequestBody @Valid RegisterDTO data) {
         return ResponseEntity.ok(userService.registerAdmin(data));
     }
 }

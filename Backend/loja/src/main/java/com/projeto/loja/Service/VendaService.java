@@ -25,20 +25,16 @@ public class VendaService {
     private ProdutoRepository produtoRepository;
 
     public void registrarVenda(VendaDTO vendaDTO) {
-        // Buscar o produto pela ID
         Produto produto = produtoRepository.findById(vendaDTO.produtoId())
                 .orElseThrow(() -> new RuntimeException("Produto com ID " + vendaDTO.produtoId() + " não encontrado!"));
 
-        // Verificar se há estoque suficiente
         if (produto.getQuantidade() < vendaDTO.quantidade()) {
             throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNome());
         }
 
-        // Subtrair a quantidade vendida do estoque
         produto.setQuantidade(produto.getQuantidade() - vendaDTO.quantidade());
         produtoRepository.save(produto);
 
-        // Registrar a venda com o preço atual do produto
         Venda venda = new Venda(produto, vendaDTO.quantidade(), produto.getPreco());
         vendaRepository.save(venda);
     }
